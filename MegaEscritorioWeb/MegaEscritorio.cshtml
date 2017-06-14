@@ -1,0 +1,115 @@
+﻿@{
+    var db = Database.Open("WebPagesEscritorio");
+    var selectCommand = "SELECT * FROM Escritorio";
+    var searchTerm = "";
+
+    if (!Request.QueryString["search"].IsEmpty())
+    {
+        selectCommand = "SELECT * FROM Escritorio WHERE Name LIKE @0 OR Material LIKE @0";
+        searchTerm = "%" + Request["search"] + "%";
+    }
+
+    var selectedData = db.Query(selectCommand, searchTerm);
+    var grid = new WebGrid(source: selectedData, defaultSort: "Date", rowsPerPage: 5);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mega Escritorio</title>
+    <style type="text/css">
+        .grid {
+            margin: 4px;
+            border-collapse: collapse;
+            width: 600px;
+        }
+
+        .main_title {
+            font-family: Garamond Serif serif;
+            font-weight: bold;
+            padding-top: 25px;
+            text-align: center;
+            letter-spacing: 5px;
+            color: #06404e;
+        }
+
+        form {
+            margin: 0 auto;
+            margin-top: 50px;
+            text-align: center;
+            width: 50%;
+            padding-bottom: 15px;
+        }
+
+        .data {
+            margin: 0 auto;
+            text-align: center;
+            width: 50%;
+            padding-bottom: 15px;
+        }
+
+        .btn {
+            width: 12%;
+            background: transparent;
+            border: 3px solid #B9B1A8;
+            text-decoration: none;
+            color: #B9B1A8;
+            font-weight: 800;
+            transition: all 0.5s;
+        }
+
+            .btn:hover {
+                border-color: #3D3C3A;
+                color: #3D3C3A;
+            }
+
+        .grid th, .grid td {
+            border: 1px solid #C0C0C0;
+            padding: 5px;
+        }
+
+        .head {
+            background-color: #E8E8E8;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .alt {
+            background-color: #E8E8E8;
+            color: #000;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<form method="get">
+    <div>
+        <label for="search">Search by item name or material in verse:</label>
+        <input type="text" name="search" value="@Request.QueryString["search"]" />
+        <input class="btn" type="Submit" value="Search" /><br />
+        (Leave blank to list all items)<br />
+    </div>
+</form>
+<div class="data">
+    @grid.GetHtml(
+        tableStyle: "grid",
+        headerStyle: "head",
+        alternatingRowStyle: "alt",
+        columns: grid.Columns(
+            grid.Column(format: @<a href="~/MegaEscritorio_Edit.cshtml?id=@item.ID">Edit</a>),
+            grid.Column("Name", header: "Item Name"),
+            grid.Column("Length"),
+            grid.Column("Width"),
+            grid.Column("Drawers"),
+            grid.Column("Material"),
+            grid.Column("Days", header: "Rush Days"),
+            grid.Column("Date", header: "Order Date"),
+            grid.Column("Total", header: "Total Cost"),
+            grid.Column(format: @<a href="~/MegaEscritorio_Delete.cshtml?id=@item.ID">Delete</a>)
+            )
+        )
+</div>
+</body>
+</html>
