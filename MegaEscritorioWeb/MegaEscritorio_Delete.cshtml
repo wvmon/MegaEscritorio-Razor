@@ -1,21 +1,22 @@
 ﻿@{ 
     var name = "";
-    var length = "";
-    var width = "";
-    var drawers = "";
+    var length = 0;
+    var width = 0;
+    var drawers = 0;
     var material = "";
-    var numDays = "";
-    var totalCost = "";
-    var id = "";
+    var numDays = 0;
+    var totalCost = 0;
+    var date = DateTime.Now;
+    var orderId = "";
 
     if (!IsPost)
     {
         if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
         {
-            id = RequestNotification.QueryString["ID"];
+            orderId = Request.QueryString["ID"];
             var db = Database.Open("WebPagesEscritorio");
-            var dbCommand = "SELECT * FROM Esritorio WHERE ID = @0";
-            var row = db.QuerySingle(dbCommand, id);
+            var dbCommand = "SELECT * FROM Escritorio WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, orderId);
 
             if (row != null)
             {
@@ -24,8 +25,9 @@
                 width = row.Width;
                 drawers = row.Drawers;
                 material = row.Material;
-                numDays = row.NumDays;
-                totalCost = row.TotalCost;
+                numDays = row.Days;
+                totalCost = row.Total;
+                date = row.Date;
             }
             else
             {
@@ -39,10 +41,10 @@
     }
     if(IsPost && !Request["buttonDelete"].IsEmpty())
     {
-        id = Request.Form["id"];
+        orderId = Request.Form["orderId"];
         var db = Database.Open("WebPagesEscritorio");
         var deleteCommand = "DELETE FROM Escritorio WHERE ID = @0";
-        db.Execute(deleteCommand, id);
+        db.Execute(deleteCommand, orderId);
         Response.Redirect("~/MegaEscritorio");
     }
 }
@@ -88,8 +90,11 @@
                 <span>Total Cost of Order:</span>
                 <span>@totalCost</span>
             </p>
-
-            <input type="hidden" name="id" value="@id" />
+            <p>
+                @Html.Label("Date:")
+                <span>@date.ToString("MMM dd yyyy")</span>
+            </p>
+            <input type="hidden" name="orderId" value="@orderId" />
 
             <p>
                 <input type="submit" name="buttonDelete" value="Delete Order" />
