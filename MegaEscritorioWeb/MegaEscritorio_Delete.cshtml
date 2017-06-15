@@ -25,8 +25,8 @@
                 width = row.Width;
                 drawers = row.Drawers;
                 material = row.Material;
-                numDays = row.NumDays;
-                totalCost = row.TotalCost;
+                numDays = row.Days;
+                totalCost = row.Total;
                 date = row.Date;
             }
             else
@@ -94,7 +94,6 @@
                 @Html.Label("Date:")
                 <span>@date.ToString("MMM dd yyyy")</span>
             </p>
-
             <input type="hidden" name="orderId" value="@orderId" />
 
             <p>
