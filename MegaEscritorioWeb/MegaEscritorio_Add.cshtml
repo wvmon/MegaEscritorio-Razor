@@ -63,63 +63,60 @@
 </head>
 <body>
 <form method="post">
-    <p class="block">
-        @Html.Label("Name of Order:")
-        @Html.TextBox("name", Request.Form["name"])
-        @Html.ValidationMessage("name")
-    </p>
-    <p class="block">
-        @Html.Label("Length:")
-        @Html.TextBox("length", Request.Form["length"])
-        @Html.ValidationMessage("length")
-    </p>
-    <p class="block">
-        @Html.Label("Width:")
-        @Html.TextBox("width", Request.Form["width"])
-        @Html.ValidationMessage("width")
-    </p>
-    <p class="block">
-        @Html.Label("Drawers:")
-        <select name="drawers">
-            <option value="NULL"></option>
-            <option value="0">No Drawers</option>
-            <option value="50">1 Drawers ($50)</option>
-            <option value="100">2 Drawers ($100)</option>
-            <option value="150">3 Drawers ($150)</option>
-            <option value="200">4 Drawers ($200)</option>
-            <option value="250">5 Drawers ($250)</option>
-            <option value="300">6 Drawers ($300)</option>
-            <option value="350">7 Drawers ($350)</option>
-        </select>
-        @Html.ValidationMessage("drawers")
-    </p>
-    <p class="block">
-        @Html.Label("Material:")
-        <select id="material" name="material">
-            <option value="NULL"></option>
-            <option value="Pine">Pine ($50)</option>
-            <option value="Laminate">Laminate ($100)</option>
-            <option value="Oak">Oak ($200)</option>
-            <option value="Mahogany">Mahogany ($250)</option>
-            <option value="Zebrawood">Zebrawood ($300)</option>
-            <option value="Purpleheart">Purpleheart ($350)</option>
-        </select>
-        @Html.ValidationMessage("material")
-    </p>
-    <p class="block">
-        @Html.Label("Rush Order:")
-        <select name="rushDays">
-            <option value="NULL"></option>
-            <option value="0">14 Days (no rush)</option>
-            <option value="3">3 Days (rush)</option>
-            <option value="5">5 Days (rush)</option>
-            <option value="7">7 Days (rush)</option>
-        </select>
-        @Html.ValidationMessage("rushDays")
-    </p>
-    <p>
-        <input type="submit" name="buttonSubmit" value="Add Desk Order"/>
-    </p>
+    @Html.Label("Name of Order:")
+    @Html.TextBox("name", Request.Form["name"])
+    @Html.ValidationMessage("name")
+    <br /><br/>
+
+    @Html.Label("Length:")
+    @Html.TextBox("length", Request.Form["length"])
+    @Html.ValidationMessage("length")
+    <br /><br />
+
+    @Html.Label("Width:")
+    @Html.TextBox("width", Request.Form["width"])
+    @Html.ValidationMessage("width")
+    <br /><br />
+
+    @Html.Label("Drawers:")
+    <select name="drawers">
+        <option value="NULL"></option>
+        <option value="0">No Drawers</option>
+        <option value="50">1 Drawers ($50)</option>
+        <option value="100">2 Drawers ($100)</option>
+        <option value="150">3 Drawers ($150)</option>
+        <option value="200">4 Drawers ($200)</option>
+        <option value="250">5 Drawers ($250)</option>
+        <option value="300">6 Drawers ($300)</option>
+        <option value="350">7 Drawers ($350)</option>
+    </select>
+    @Html.ValidationMessage("drawers")
+    <br /><br />
+
+    @Html.Label("Material:")
+    <select id="material" name="material">
+        <option value="NULL"></option>
+        <option value="Pine">Pine ($50)</option>
+        <option value="Laminate">Laminate ($100)</option>
+        <option value="Oak">Oak ($200)</option>
+        <option value="Mahogany">Mahogany ($250)</option>
+        <option value="Zebrawood">Zebrawood ($300)</option>
+        <option value="Purpleheart">Purpleheart ($350)</option>
+    </select>
+    @Html.ValidationMessage("material")
+    <br /><br />
+
+    @Html.Label("Rush Order:")
+    <select name="rushDays">
+        <option value="NULL"></option>
+        <option value="0">14 Days (no rush)</option>
+        <option value="3">3 Days (rush)</option>
+        <option value="5">5 Days (rush)</option>
+        <option value="7">7 Days (rush)</option>
+    </select>
+    @Html.ValidationMessage("rushDays")
+    <br /><br />
+    <p><input type="submit" name="buttonSubmit" value="Add Desk Order"/></p>
 </form>
 </body>
 </html>
