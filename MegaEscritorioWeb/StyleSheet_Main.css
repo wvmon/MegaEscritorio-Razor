@@ -1,0 +1,83 @@
+﻿h1 {
+    border-bottom: 3px solid #06404e;
+    font-family: Garamond Serif serif;
+    font-weight: bold;
+    padding-top: 25px;
+    text-align: center;
+    letter-spacing: 5px;
+    color: #06404e;
+}
+
+body {
+    margin: 0;
+    padding: 1em;
+    background-color: #ffffff;
+    font: 75%/1.75em;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: #06404e;
+}
+
+.grid {
+    margin: 4px;
+    border-collapse: collapse;
+    width: 600px;
+}
+
+.main_title {
+    font-family: Garamond Serif serif;
+    font-weight: bold;
+    padding-top: 25px;
+    text-align: center;
+    letter-spacing: 5px;
+    color: #06404e;
+}
+
+form {
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: center;
+    width: 50%;
+    padding-bottom: 15px;
+}
+
+.data {
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+    padding-bottom: 15px;
+}
+
+.btn {
+    width: 12%;
+    background: transparent;
+    border: 3px solid #B9B1A8;
+    text-decoration: none;
+    color: #B9B1A8;
+    font-weight: 800;
+    transition: all 0.5s;
+}
+
+.btn:hover {
+    border-color: #3D3C3A;
+    color: #3D3C3A;
+}
+
+.grid th, .grid td {
+    border: 1px solid #C0C0C0;
+    padding: 5px;
+}
+
+.head {
+    background-color: #E8E8E8;
+    font-weight: bold;
+    color: #FFF;
+}
+
+.alt {
+    background-color: #E8E8E8;
+    color: #000;
+}
+
+a {
+    text-decoration: none;
+}

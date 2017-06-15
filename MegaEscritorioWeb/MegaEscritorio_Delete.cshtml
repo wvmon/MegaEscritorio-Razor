@@ -1,9 +1,105 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var name = "";
+    var length = "";
+    var width = "";
+    var drawers = "";
+    var material = "";
+    var numDays = "";
+    var totalCost = "";
+    var id = "";
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            id = RequestNotification.QueryString["ID"];
+            var db = Database.Open("WebPagesEscritorio");
+            var dbCommand = "SELECT * FROM Esritorio WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, id);
+
+            if (row != null)
+            {
+                name = row.Name;
+                length = row.Length;
+                width = row.Width;
+                drawers = row.Drawers;
+                material = row.Material;
+                numDays = row.NumDays;
+                totalCost = row.TotalCost;
+            }
+            else
+            {
+                Validation.AddFormError("No order was found for that ID.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No order was selected.");
+        }
+    }
+    if(IsPost && !Request["buttonDelete"].IsEmpty())
+    {
+        id = Request.Form["id"];
+        var db = Database.Open("WebPagesEscritorio");
+        var deleteCommand = "DELETE FROM Escritorio WHERE ID = @0";
+        db.Execute(deleteCommand, id);
+        Response.Redirect("~/MegaEscritorio");
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Delete</title>
 </head>
 <body>
+    <h1>Delete a Desk Order</h1>
+    @Html.ValidationSummary()
+
+    <form method="post">
+        <fieldset>
+            <legend>Desk Order Information</legend>
+
+            <p>
+                <span>Customer Name:</span>
+                <span>@name</span>
+            </p>
+            <p>
+                <span>Length:</span>
+                <span>@length</span>
+            </p>
+            <p>
+                <span>Width:</span>
+                <span>@width</span>
+            </p>
+            <p>
+                <span>Number of Drawers:</span>
+                <span>@drawers</span>
+            </p>
+            <p>
+                <span>Surface Material:</span>
+                <span>@material</span>
+            </p>
+            <p>
+                <span>Number of Days:</span>
+                <span>@numDays</span>
+            </p>
+            <p>
+                <span>Total Cost of Order:</span>
+                <span>@totalCost</span>
+            </p>
+
+            <input type="hidden" name="id" value="@id" />
+
+            <p>
+                <input type="submit" name="buttonDelete" value="Delete Order" />
+            </p>
+
+        </fieldset>
+        <p>
+            <a href="~/MegaEscritorio">Return to Mega Escritorio Orders</a>
+        </p>
+    </form>
 
 </body>
 </html>
