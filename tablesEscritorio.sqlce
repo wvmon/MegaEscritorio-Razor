@@ -1,0 +1,15 @@
+﻿-- Script Date: 6/15/2017 2:36 AM  - ErikEJ.SqlCeScripting version 3.5.2.64
+CREATE TABLE [Escritorio] (
+  [Id] int IDENTITY (1,1) NOT NULL
+, [Name] nvarchar(50) NOT NULL
+, [Length] float NOT NULL
+, [Width] float NOT NULL
+, [Drawers] int NOT NULL
+, [Material] nvarchar(15) NOT NULL
+, [Days] int NOT NULL
+, [Date] datetime NOT NULL
+, [Total] float NOT NULL
+);
+GO
+ALTER TABLE [Escritorio] ADD CONSTRAINT [PK_Escritorio] PRIMARY KEY ([Id]);
+GO

@@ -1,9 +1,125 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Update</title>
-</head>
-<body>
+﻿@using WebMatrix.Data;
+@{
 
-</body>
-</html>
+    var name = "";
+    var length = 0;
+    var width = 0;
+    var drawers = 0;
+    var material = "";
+    var numDays = 0;
+    var totalCost = 0;
+    var orderId = "";
+
+    @*
+        Get data based on ID
+    *@
+if (!IsPost)
+{
+    if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+    {
+        orderId = Request.QueryString["ID"];
+        var db = Database.Open("WebPagesEscritorio");
+        var dbCommand = "SELECT * FROM Escritorio WHERE ID = @0";
+        var row = db.QuerySingle(dbCommand, orderId);
+
+        if (row != null)
+        {
+            name = row.Name;
+            length = row.Length;
+            width = row.Width;
+            drawers = row.Drawers;
+            material = row.Material;
+            numDays = row.Days;
+            totalCost = row.Total;
+        }
+        else
+        {
+            Validation.AddFormError("No Escritorio was selected.");
+        }
+    }
+    else
+    {
+        Validation.AddFormError("No Escritorio was selected.");
+    }
+}
+
+if (IsPost)
+{
+    Validation.RequireField("name", "You must enter a name");
+    Validation.RequireField("length", "Length is required");
+    Validation.RequireField("width", "Width is required");
+    Validation.RequireField("drawers", "Drawers is required");
+    Validation.RequireField("material", "Material is required");
+    Validation.RequireField("numDays", "Days is required");
+    Validation.RequireField("totalCost", "Total cost is required");
+    Validation.RequireField("orderId", "No order ID was submitted!");
+
+
+    name = Request.Form["name"];
+    length = Request.Form["length"].AsInt();
+    width = Request.Form["width"].AsInt();
+    drawers = Request.Form["drawers"].AsInt();
+    material = Request.Form["material"];
+    numDays = Request.Form["numDays"].AsInt();
+    totalCost = Request.Form["totalCost"].AsInt();
+    orderId = Request.Form["ID"];
+
+
+
+    if (Validation.IsValid())
+    {
+        var db = Database.Open("WebPagesEscritorio");
+        var updateCommand = "UPDATE Escritorio SET Name=@0, Length=@1, Width=@2, Drawers=@3, Material=@4, Days=@5, Total=@6 WHERE ID=@7";
+        db.Execute(updateCommand, name, length, width, drawers, material, numDays, totalCost, orderId);
+        Response.Redirect("~/MegaEscritorio");
+    }
+}
+}
+
+<h2>Edit an Escritorio</h2>
+@Html.ValidationSummary()
+<form method="post">
+    <fieldset>
+        <legend>Escritorio Information</legend>
+
+        <p>
+            <label for="name">Customer:</label>
+            <input type="text" name="name" value="@name" />
+        </p>
+
+        <p>
+            <label for="length">Length:</label>
+            <input type="text" name="length" value="@length" />
+        </p>
+
+        <p>
+            <label for="width">Width:</label>
+            <input type="text" name="width" value="@width" />
+        </p>
+
+        <p>
+            <label for="drawers">Drawers:</label>
+            <input type="text" name="drawers" value="@drawers" />
+        </p>
+
+        <p>
+            <label for="material">Material:</label>
+            <input type="text" name="material" value="@material" />
+        </p>
+
+        <p>
+            <label for="numDays">Days:</label>
+            <input type="text" name="numDays" value="@numDays" />
+        </p>
+
+        <p>
+            <label for="totalCost">Total:</label>
+            <input type="text" name="totalCost" value="@totalCost" />
+        </p>
+
+        <input type="hidden" name="orderId" value="@orderId" />
+
+        <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+    </fieldset>
+</form>
+<p><<a href="~/MegaEscritorio">Return to Mega Escritorio Orders</a></p>
