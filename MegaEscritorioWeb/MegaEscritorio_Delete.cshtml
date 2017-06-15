@@ -12,7 +12,7 @@
     {
         if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
         {
-            id = RequestNotification.QueryString["ID"];
+            id = Request.QueryString["ID"];
             var db = Database.Open("WebPagesEscritorio");
             var dbCommand = "SELECT * FROM Esritorio WHERE ID = @0";
             var row = db.QuerySingle(dbCommand, id);
@@ -20,12 +20,12 @@
             if (row != null)
             {
                 name = row.Name;
-                length = row.Length;
-                width = row.Width;
-                drawers = row.Drawers;
-                material = row.Material;
-                numDays = row.NumDays;
-                totalCost = row.TotalCost;
+                length = row.Length.ToString();
+                width = row.Width.ToString();
+                drawers = row.Drawers.ToString();
+                material = row.Material.ToString();
+                numDays = row.NumDays.ToString();
+                totalCost = row.TotalCost.ToString();
             }
             else
             {
