@@ -1,4 +1,9 @@
 ﻿@{
+    Validation.RequireField("name", "Name for the item is required.");
+    Validation.RequireField("length", "Length for the desk is required.");
+    Validation.Add("length", Validator.Integer("Length must be integer"));
+    Validation.RequireField("width", "Width for the desk is required.");
+    Validation.Add("width", Validator.Integer("Width must be an integer."));
     Validation.RequireField("drawers", "Please select number of drawers.");
     Validation.RequireField("material", "Please select material for desk.");
     Validation.RequireField("rushDays", "Please select the days for delivery.");
@@ -76,7 +81,7 @@
     <p class="block">
         @Html.Label("Drawers:")
         <select name="drawers">
-            <option value="NULL">-- Select Number of Drawers --</option>
+            <option value="NULL"></option>
             <option value="0">No Drawers</option>
             <option value="50">1 Drawers ($50)</option>
             <option value="100">2 Drawers ($100)</option>
@@ -91,7 +96,7 @@
     <p class="block">
         @Html.Label("Material:")
         <select id="material" name="material">
-            <option value="NULL">-- Select Material --</option>
+            <option value="NULL"></option>
             <option value="Pine">Pine ($50)</option>
             <option value="Laminate">Laminate ($100)</option>
             <option value="Oak">Oak ($200)</option>
@@ -104,7 +109,7 @@
     <p class="block">
         @Html.Label("Rush Order:")
         <select name="rushDays">
-            <option value="NULL">-- Select Rush Days --</option>
+            <option value="NULL"></option>
             <option value="0">14 Days (no rush)</option>
             <option value="3">3 Days (rush)</option>
             <option value="5">5 Days (rush)</option>
