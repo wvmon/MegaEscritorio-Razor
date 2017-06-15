@@ -10,7 +10,7 @@
     }
 
     var selectedData = db.Query(selectCommand, searchTerm);
-    var grid = new WebGrid(source: selectedData, defaultSort: "Date", rowsPerPage: 5);
+    var grid = new WebGrid(source: selectedData, defaultSort: "Date", rowsPerPage: 10);
 }
 <!DOCTYPE html>
 <html>
@@ -111,5 +111,6 @@
             )
         )
 </div>
+<p><a href="MegaEscritorio_Add.cshtml">Add Desk</a></p>
 </body>
 </html>
