@@ -12,91 +12,103 @@
     @*
         Get data based on ID
     *@
-if (!IsPost)
-{
-    if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+    if (!IsPost)
     {
-        orderId = Request.QueryString["ID"];
-        var db = Database.Open("WebPagesEscritorio");
-        var dbCommand = "SELECT * FROM Escritorio WHERE ID = @0";
-        var row = db.QuerySingle(dbCommand, orderId);
-
-        if (row != null)
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
         {
-            name = row.Name;
-            length = row.Length;
-            width = row.Width;
+            orderId = Request.QueryString["ID"];
+            var db = Database.Open("WebPagesEscritorio");
+            var dbCommand = "SELECT * FROM Escritorio WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, orderId);
+
+            if (row != null)
+            {
+                name = row.Name;
+                length = row.Length;
+                width = row.Width;
+            }
+            else
+            {
+                Validation.AddFormError("No Escritorio was selected.");
+            }
         }
         else
         {
             Validation.AddFormError("No Escritorio was selected.");
         }
     }
-    else
+
+    if (IsPost)
     {
-        Validation.AddFormError("No Escritorio was selected.");
+        Validation.RequireField("name", "You must enter a name");
+        Validation.RequireField("length", "Length is required");
+        Validation.RequireField("width", "Width is required");
+        Validation.RequireField("drawers", "Drawers is required");
+        Validation.RequireField("material", "Material is required");
+        Validation.RequireField("numDays", "Days is required");
+        Validation.RequireField("totalCost", "Total cost is required");
+        Validation.RequireField("orderId", "No order ID was submitted!");
+
+
+        name = Request.Form["name"];
+        length = Request.Form["length"].AsInt();
+        width = Request.Form["width"].AsInt();
+        drawers = Request.Form["drawers"].AsInt();
+        material = Request.Form["material"];
+        numDays = Request.Form["numDays"].AsInt();
+
+        var materialCost = 0;
+        switch (material)
+        {
+            case "Pine":
+                materialCost = 50;
+                break;
+            case "Laminate":
+                materialCost = 100;
+                break;
+            case "Oak":
+                materialCost = 200;
+                break;
+            case "Mahogany":
+                materialCost = 250;
+                break;
+            case "Zebrawood":
+                materialCost = 300;
+                break;
+            case "Purpleheart":
+                materialCost = 350;
+                break;
+        }
+
+        var orderTotal = 200;
+
+        if ((length * width) < 1000)
+        {
+            totalCost = orderTotal + drawers + materialCost + numDays;
+
+            orderId = Request.Form["orderId"];
+            var db = Database.Open("WebPagesEscritorio");
+            var updateCommand = "UPDATE Escritorio SET Name=@0, Length=@1, Width=@2, Drawers=@3, Material=@4, Days=@5, Total=@6 WHERE ID=@7";
+            db.Execute(updateCommand, name, length, width, drawers / 50, material, numDays, totalCost, orderId);
+            Response.Redirect("~/MegaEscritorio");
+        }
+        else
+        {
+            var actualCost = (((length * width) - 1000) * 5) + orderTotal;
+            totalCost = actualCost + drawers + materialCost + numDays;
+
+            orderId = Request.Form["orderId"];
+            var db = Database.Open("WebPagesEscritorio");
+            var updateCommand = "UPDATE Escritorio SET Name=@0, Length=@1, Width=@2, Drawers=@3, Material=@4, Days=@5, Total=@6 WHERE ID=@7";
+            db.Execute(updateCommand, name, length, width, drawers / 50, material, numDays, totalCost, orderId);
+            Response.Redirect("~/MegaEscritorio");
+        }
     }
-}
-
-if (IsPost)
-{
-    Validation.RequireField("name", "You must enter a name");
-    Validation.RequireField("length", "Length is required");
-    Validation.RequireField("width", "Width is required");
-    Validation.RequireField("drawers", "Drawers is required");
-    Validation.RequireField("material", "Material is required");
-    Validation.RequireField("numDays", "Days is required");
-    Validation.RequireField("totalCost", "Total cost is required");
-    Validation.RequireField("orderId", "No order ID was submitted!");
-
-
-    name = Request.Form["name"];
-    length = Request.Form["length"].AsInt();
-    width = Request.Form["width"].AsInt();
-    drawers = Request.Form["drawers"].AsInt();
-    material = Request.Form["material"];
-    numDays = Request.Form["numDays"].AsInt();
-    orderId = Request.Form["ID"];
-
-    var materialCost = 0;
-    switch (material)
-    {
-        case "Pine":
-            materialCost = 50;
-            break;
-        case "Laminate":
-            materialCost = 100;
-            break;
-        case "Oak":
-            materialCost = 200;
-            break;
-        case "Mahogany":
-            materialCost = 250;
-            break;
-        case "Zebrawood":
-            materialCost = 300;
-            break;
-        case "Purpleheart":
-            materialCost = 350;
-            break;
-    }
-
-    totalCost = (length * width) + drawers + materialCost + numDays;
-
-    if (IsPost && !Request["buttonSubmit"].IsEmpty())
-    {
-        orderId = Request.Form["orderId"];
-        var db = Database.Open("WebPagesEscritorio");
-        var updateCommand = "UPDATE Escritorio SET Name=@0, Length=@1, Width=@2, Drawers=@3, Material=@4, Days=@5, Total=@6 WHERE ID=@7";
-        db.Execute(updateCommand, name, length, width, drawers/50, material, numDays, totalCost, orderId);
-        Response.Redirect("~/MegaEscritorio");
-    }
-}
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delete</title>    <!-- Latest compiled and minified CSS -->
+    <title>Edit</title>    <!-- Latest compiled and minified CSS -->
     @RenderPage("header.cshtml");
 </head>
 <body>

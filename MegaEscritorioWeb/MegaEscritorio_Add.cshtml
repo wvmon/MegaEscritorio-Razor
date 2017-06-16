@@ -48,12 +48,26 @@
                 break;
         }
 
-        totalCost = (length * width) + drawers + materialCost + numDays;
+        if ((length * width) < 1000)
+        {
+            var actualCost = 200;
+            totalCost = actualCost + drawers + materialCost + numDays;
 
-        var db = Database.Open("WebPagesEscritorio");
-        var insertCommand = "INSERT INTO Escritorio (Name, Length, Width, Drawers, Material, Days, Date, Total) Values(@0, @1, @2, @3, @4, @5, @6, @7)";
-        db.Execute(insertCommand, name, length, width, drawers/50, material, numDays, DateTime.Now, totalCost);
-        Response.Redirect("~/MegaEscritorio");
+            var db = Database.Open("WebPagesEscritorio");
+            var insertCommand = "INSERT INTO Escritorio (Name, Length, Width, Drawers, Material, Days, Date, Total) Values(@0, @1, @2, @3, @4, @5, @6, @7)";
+            db.Execute(insertCommand, name, length, width, drawers/50, material, numDays, DateTime.Now, totalCost);
+            Response.Redirect("~/MegaEscritorio");
+        }
+        else
+        {
+            var actualCost = (((length*width) - 1000) * 5) + 200;
+            totalCost = actualCost + drawers + materialCost + numDays;
+
+            var db = Database.Open("WebPagesEscritorio");
+            var insertCommand = "INSERT INTO Escritorio (Name, Length, Width, Drawers, Material, Days, Date, Total) Values(@0, @1, @2, @3, @4, @5, @6, @7)";
+            db.Execute(insertCommand, name, length, width, drawers/50, material, numDays, DateTime.Now, totalCost);
+            Response.Redirect("~/MegaEscritorio");
+        }
     }
 }
 <!DOCTYPE html>
