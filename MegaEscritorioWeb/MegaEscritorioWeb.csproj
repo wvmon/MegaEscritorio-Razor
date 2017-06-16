@@ -82,10 +82,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="WebMatrix.Data">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Assemblies\WebMatrix.Data.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\WebMatrix.Data.dll</HintPath>
     </Reference>
     <Reference Include="WebMatrix.WebData">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Assemblies\WebMatrix.WebData.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\WebMatrix.WebData.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +94,7 @@
     <Content Include="MegaEscritorio_Add.cshtml" />
     <Content Include="MegaEscritorio_Delete.cshtml" />
     <Content Include="MegaEscritorio_Edit.cshtml" />
+    <Content Include="header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

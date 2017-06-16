@@ -1,5 +1,4 @@
-﻿@using WebMatrix.Data;
-@{
+﻿@{
     var db = Database.Open("WebPagesEscritorio");
     var selectCommand = "SELECT * FROM Escritorio";
     var searchTerm = "";
@@ -17,6 +16,7 @@
 <html>
 <head>
     <title>Mega Escritorio</title>
+    @RenderPage("header.cshtml");
     <style type="text/css">
         .grid {
             margin: 4px;
@@ -111,7 +111,7 @@
             grid.Column(format: @<a href="~/MegaEscritorio_Delete.cshtml?id=@item.ID">Delete</a>)
             )
         )
+    <p><a class="btn btn-primary" href="MegaEscritorio_Add.cshtml">Add Desk</a></p>
 </div>
-<p><a href="MegaEscritorio_Add.cshtml">Add Desk</a></p>
 </body>
 </html>

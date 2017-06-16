@@ -1,5 +1,4 @@
-﻿@using WebMatrix.Data;
-@{ 
+﻿@{ 
     var name = "";
     var length = 0;
     var width = 0;
@@ -53,7 +52,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delete</title>
+    <title>Delete</title>    <!-- Latest compiled and minified CSS -->
+    @RenderPage("header.cshtml");
 </head>
 <body>
     <h1>Delete a Desk Order</h1>
@@ -98,12 +98,12 @@
             <input type="hidden" name="orderId" value="@orderId" />
 
             <p>
-                <input type="submit" name="buttonDelete" value="Delete Order" />
+                <input class="btn btn-primary" type="submit" name="buttonDelete" value="Delete Order" />
             </p>
 
         </fieldset>
         <p>
-            <a href="~/MegaEscritorio">Return to Mega Escritorio Orders</a>
+            <a class="btn btn-primary" href="~/MegaEscritorio">Return to Mega Escritorio Orders</a>
         </p>
     </form>
 

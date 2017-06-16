@@ -1,5 +1,4 @@
-﻿@using WebMatrix.Data;
-@{
+﻿@{
 
     var name = "";
     var length = 0;
@@ -27,10 +26,6 @@ if (!IsPost)
             name = row.Name;
             length = row.Length;
             width = row.Width;
-            drawers = row.Drawers;
-            material = row.Material;
-            numDays = row.Days;
-            totalCost = row.Total;
         }
         else
         {
@@ -47,12 +42,11 @@ if (IsPost)
 {
     Validation.RequireField("name", "You must enter a name");
     Validation.RequireField("length", "Length is required");
-    Validation.Add("length", Validator.Integer("Length must be integer"));
     Validation.RequireField("width", "Width is required");
-    Validation.Add("width", Validator.Integer("Width must be an integer."));
     Validation.RequireField("drawers", "Drawers is required");
     Validation.RequireField("material", "Material is required");
     Validation.RequireField("numDays", "Days is required");
+    Validation.RequireField("totalCost", "Total cost is required");
     Validation.RequireField("orderId", "No order ID was submitted!");
 
 
@@ -63,7 +57,6 @@ if (IsPost)
     material = Request.Form["material"];
     numDays = Request.Form["numDays"].AsInt();
     orderId = Request.Form["ID"];
-
 
     var materialCost = 0;
     switch (material)
@@ -90,34 +83,43 @@ if (IsPost)
 
     totalCost = (length * width) + drawers + materialCost + numDays;
 
-    if (Validation.IsValid())
+    if (IsPost && !Request["buttonSubmit"].IsEmpty())
     {
+        orderId = Request.Form["orderId"];
         var db = Database.Open("WebPagesEscritorio");
         var updateCommand = "UPDATE Escritorio SET Name=@0, Length=@1, Width=@2, Drawers=@3, Material=@4, Days=@5, Total=@6 WHERE ID=@7";
-        db.Execute(updateCommand, name, length, width, drawers, material, numDays, totalCost, orderId);
+        db.Execute(updateCommand, name, length, width, drawers/50, material, numDays, totalCost, orderId);
         Response.Redirect("~/MegaEscritorio");
     }
 }
 }
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete</title>    <!-- Latest compiled and minified CSS -->
+    @RenderPage("header.cshtml");
+</head>
+<body>
 <h2>Edit an Escritorio</h2>
 @Html.ValidationSummary()
 <form method="post">
-        <h1>Edit Desk Order</h1>
-        @Html.Label("Name on Order:")
-        @Html.TextBox("name", Request.Form["name"])
-        @Html.ValidationMessage("name")
-        <br /><br />
+    <fieldset>
+        <legend>Escritorio Information</legend>
 
-        @Html.Label("Desk Length in inches:")
-        @Html.TextBox("length", Request.Form["length"])
-        @Html.ValidationMessage("length")
-        <br /><br />
+        <p>
+            <label for="name">Customer:</label>
+            <input type="text" name="name" value="@name" />
+        </p>
 
-        @Html.Label("Desk Width in inches:")
-        @Html.TextBox("width", Request.Form["width"])
-        @Html.ValidationMessage("width")
-        <br /><br />
+        <p>
+            <label for="length">Length:</label>
+            <input type="text" name="length" value="@length" />
+        </p>
+
+        <p>
+            <label for="width">Width:</label>
+            <input type="text" name="width" value="@width" />
+        </p>
 
         @Html.Label("Number of Drawers:")
         <select name="drawers">
@@ -146,7 +148,7 @@ if (IsPost)
         <br /><br />
 
         @Html.Label("Days on Order:")
-        <select name="rushDays">
+        <select name="numDays">
             <option value="0">14 Days (no rush)</option>
             <option value="3">3 Days (rush)</option>
             <option value="5">5 Days (rush)</option>
@@ -154,10 +156,12 @@ if (IsPost)
         </select>
         @Html.ValidationMessage("numDays")
         <br /><br />
-        <p><input type="submit" name="buttonSubmit" value="Add Desk Order" /></p>
 
-<input type="hidden" name="orderId" value="@orderId" />
+        <input type="hidden" name="orderId" value="@orderId" />
 
-<p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+        <p><input class="btn btn-primary" type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+    </fieldset>
 </form>
-<p><<a href="~/MegaEscritorio">Return to Mega Escritorio Orders</a></p>
+<p><a class="btn btn-primary" href="~/MegaEscritorio">Return to Mega Escritorio Orders</a></p>
+</body>
+</html>

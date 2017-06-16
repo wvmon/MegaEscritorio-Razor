@@ -1,5 +1,4 @@
-﻿@using WebMatrix.Data;
-@{
+﻿@{
     Validation.RequireField("name", "Name for the item is required.");
     Validation.RequireField("length", "Length for the desk is required.");
     Validation.Add("length", Validator.Integer("Length must be integer"));
@@ -53,36 +52,37 @@
 
         var db = Database.Open("WebPagesEscritorio");
         var insertCommand = "INSERT INTO Escritorio (Name, Length, Width, Drawers, Material, Days, Date, Total) Values(@0, @1, @2, @3, @4, @5, @6, @7)";
-        db.Execute(insertCommand, name, length, width, drawers, material, numDays, DateTime.Now, totalCost);
+        db.Execute(insertCommand, name, length, width, drawers/50, material, numDays, DateTime.Now, totalCost);
         Response.Redirect("~/MegaEscritorio");
     }
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Insert</title>
+    <title>Insert</title>    <!-- Latest compiled and minified CSS -->
+    @RenderPage("header.cshtml");
 </head>
 <body>
 <form method="post">
-    @Html.Label("Name on Order:")
+    @Html.Label("Name of Order:")
     @Html.TextBox("name", Request.Form["name"])
     @Html.ValidationMessage("name")
     <br /><br/>
 
-    @Html.Label("Desk Length in inches:")
+    @Html.Label("Length:")
     @Html.TextBox("length", Request.Form["length"])
     @Html.ValidationMessage("length")
     <br /><br />
 
-    @Html.Label("Desk Width in inches:")
+    @Html.Label("Width:")
     @Html.TextBox("width", Request.Form["width"])
     @Html.ValidationMessage("width")
     <br /><br />
 
-    @Html.Label("Number of Drawers:")
+    @Html.Label("Drawers:")
     <select name="drawers">
         <option value="0">No Drawers</option>
-        <option value="50">1 Drawers ($50)</option>
+        <option value="50">1 Drawer ($50)</option>
         <option value="100">2 Drawers ($100)</option>
         <option value="150">3 Drawers ($150)</option>
         <option value="200">4 Drawers ($200)</option>
@@ -93,7 +93,7 @@
     @Html.ValidationMessage("drawers")
     <br /><br />
 
-    @Html.Label("Desk Material:")
+    @Html.Label("Material:")
     <select id="material" name="material">
         <option value="Pine">Pine ($50)</option>
         <option value="Laminate">Laminate ($100)</option>
@@ -105,7 +105,7 @@
     @Html.ValidationMessage("material")
     <br /><br />
 
-    @Html.Label("Days on Order:")
+    @Html.Label("Rush Order:")
     <select name="rushDays">
         <option value="0">14 Days (no rush)</option>
         <option value="3">3 Days (rush)</option>
@@ -114,10 +114,10 @@
     </select>
     @Html.ValidationMessage("rushDays")
     <br /><br />
-    <p><input type="submit" name="buttonSubmit" value="Add Desk Order"/></p>
+    <p><input class="btn btn-primary" type="submit" name="buttonSubmit" value="Add Desk Order"/></p>
 </form>
 <p>
-    <a href="~/MegaEscritorio">Return to Mega Escritorio Orders</a>
+    <a class="btn btn-primary" href="~/MegaEscritorio">Return to Mega Escritorio Orders</a>
 </p>
 </body>
 </html>
