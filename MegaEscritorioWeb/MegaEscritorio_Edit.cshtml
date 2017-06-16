@@ -47,11 +47,12 @@ if (IsPost)
 {
     Validation.RequireField("name", "You must enter a name");
     Validation.RequireField("length", "Length is required");
+    Validation.Add("length", Validator.Integer("Length must be integer"));
     Validation.RequireField("width", "Width is required");
+    Validation.Add("width", Validator.Integer("Width must be an integer."));
     Validation.RequireField("drawers", "Drawers is required");
     Validation.RequireField("material", "Material is required");
     Validation.RequireField("numDays", "Days is required");
-    Validation.RequireField("totalCost", "Total cost is required");
     Validation.RequireField("orderId", "No order ID was submitted!");
 
 
@@ -61,10 +62,33 @@ if (IsPost)
     drawers = Request.Form["drawers"].AsInt();
     material = Request.Form["material"];
     numDays = Request.Form["numDays"].AsInt();
-    totalCost = Request.Form["totalCost"].AsInt();
     orderId = Request.Form["ID"];
 
 
+    var materialCost = 0;
+    switch (material)
+    {
+        case "Pine":
+            materialCost = 50;
+            break;
+        case "Laminate":
+            materialCost = 100;
+            break;
+        case "Oak":
+            materialCost = 200;
+            break;
+        case "Mahogany":
+            materialCost = 250;
+            break;
+        case "Zebrawood":
+            materialCost = 300;
+            break;
+        case "Purpleheart":
+            materialCost = 350;
+            break;
+    }
+
+    totalCost = (length * width) + drawers + materialCost + numDays;
 
     if (Validation.IsValid())
     {
@@ -79,47 +103,61 @@ if (IsPost)
 <h2>Edit an Escritorio</h2>
 @Html.ValidationSummary()
 <form method="post">
-    <fieldset>
-        <legend>Escritorio Information</legend>
+        <h1>Edit Desk Order</h1>
+        @Html.Label("Name on Order:")
+        @Html.TextBox("name", Request.Form["name"])
+        @Html.ValidationMessage("name")
+        <br /><br />
 
-        <p>
-            <label for="name">Customer:</label>
-            <input type="text" name="name" value="@name" />
-        </p>
+        @Html.Label("Desk Length in inches:")
+        @Html.TextBox("length", Request.Form["length"])
+        @Html.ValidationMessage("length")
+        <br /><br />
 
-        <p>
-            <label for="length">Length:</label>
-            <input type="text" name="length" value="@length" />
-        </p>
+        @Html.Label("Desk Width in inches:")
+        @Html.TextBox("width", Request.Form["width"])
+        @Html.ValidationMessage("width")
+        <br /><br />
 
-        <p>
-            <label for="width">Width:</label>
-            <input type="text" name="width" value="@width" />
-        </p>
+        @Html.Label("Number of Drawers:")
+        <select name="drawers">
+            <option value="0">No Drawers</option>
+            <option value="50">1 Drawers ($50)</option>
+            <option value="100">2 Drawers ($100)</option>
+            <option value="150">3 Drawers ($150)</option>
+            <option value="200">4 Drawers ($200)</option>
+            <option value="250">5 Drawers ($250)</option>
+            <option value="300">6 Drawers ($300)</option>
+            <option value="350">7 Drawers ($350)</option>
+        </select>
+        @Html.ValidationMessage("drawers")
+        <br /><br />
 
-        <p>
-            <label for="drawers">Drawers:</label>
-            <input type="text" name="drawers" value="@drawers" />
-        </p>
+        @Html.Label("Desk Material:")
+        <select id="material" name="material">
+            <option value="Pine">Pine ($50)</option>
+            <option value="Laminate">Laminate ($100)</option>
+            <option value="Oak">Oak ($200)</option>
+            <option value="Mahogany">Mahogany ($250)</option>
+            <option value="Zebrawood">Zebrawood ($300)</option>
+            <option value="Purpleheart">Purpleheart ($350)</option>
+        </select>
+        @Html.ValidationMessage("material")
+        <br /><br />
 
-        <p>
-            <label for="material">Material:</label>
-            <input type="text" name="material" value="@material" />
-        </p>
+        @Html.Label("Days on Order:")
+        <select name="rushDays">
+            <option value="0">14 Days (no rush)</option>
+            <option value="3">3 Days (rush)</option>
+            <option value="5">5 Days (rush)</option>
+            <option value="7">7 Days (rush)</option>
+        </select>
+        @Html.ValidationMessage("numDays")
+        <br /><br />
+        <p><input type="submit" name="buttonSubmit" value="Add Desk Order" /></p>
 
-        <p>
-            <label for="numDays">Days:</label>
-            <input type="text" name="numDays" value="@numDays" />
-        </p>
+<input type="hidden" name="orderId" value="@orderId" />
 
-        <p>
-            <label for="totalCost">Total:</label>
-            <input type="text" name="totalCost" value="@totalCost" />
-        </p>
-
-        <input type="hidden" name="orderId" value="@orderId" />
-
-        <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
-    </fieldset>
+<p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
 </form>
 <p><<a href="~/MegaEscritorio">Return to Mega Escritorio Orders</a></p>

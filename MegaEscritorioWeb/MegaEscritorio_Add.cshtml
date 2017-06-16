@@ -1,4 +1,5 @@
-﻿@{
+﻿@using WebMatrix.Data;
+@{
     Validation.RequireField("name", "Name for the item is required.");
     Validation.RequireField("length", "Length for the desk is required.");
     Validation.Add("length", Validator.Integer("Length must be integer"));
@@ -63,22 +64,22 @@
 </head>
 <body>
 <form method="post">
-    @Html.Label("Name of Order:")
+    @Html.Label("Name on Order:")
     @Html.TextBox("name", Request.Form["name"])
     @Html.ValidationMessage("name")
     <br /><br/>
 
-    @Html.Label("Length:")
+    @Html.Label("Desk Length in inches:")
     @Html.TextBox("length", Request.Form["length"])
     @Html.ValidationMessage("length")
     <br /><br />
 
-    @Html.Label("Width:")
+    @Html.Label("Desk Width in inches:")
     @Html.TextBox("width", Request.Form["width"])
     @Html.ValidationMessage("width")
     <br /><br />
 
-    @Html.Label("Drawers:")
+    @Html.Label("Number of Drawers:")
     <select name="drawers">
         <option value="0">No Drawers</option>
         <option value="50">1 Drawers ($50)</option>
@@ -92,7 +93,7 @@
     @Html.ValidationMessage("drawers")
     <br /><br />
 
-    @Html.Label("Material:")
+    @Html.Label("Desk Material:")
     <select id="material" name="material">
         <option value="Pine">Pine ($50)</option>
         <option value="Laminate">Laminate ($100)</option>
@@ -104,7 +105,7 @@
     @Html.ValidationMessage("material")
     <br /><br />
 
-    @Html.Label("Rush Order:")
+    @Html.Label("Days on Order:")
     <select name="rushDays">
         <option value="0">14 Days (no rush)</option>
         <option value="3">3 Days (rush)</option>
