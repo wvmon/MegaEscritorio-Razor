@@ -9,6 +9,9 @@
     var date = DateTime.Now;
     var orderId = "";
 
+        @* 
+        Check to see if a selection has been made. Retrieve the selected row information from the database. Create Validation error messages.
+        *@
     if (!IsPost)
     {
         if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
@@ -39,7 +42,7 @@
             Validation.AddFormError("No order was selected.");
         }
     }
-    if(IsPost && !Request["buttonDelete"].IsEmpty())
+    if (IsPost && !Request["buttonDelete"].IsEmpty())
     {
         orderId = Request.Form["orderId"];
         var db = Database.Open("WebPagesEscritorio");
@@ -59,6 +62,7 @@
     <h1>Delete a Desk Order</h1>
     @Html.ValidationSummary()
 
+    <!-- Display the selected order information to confirm the selection before deleting. -->
     <form method="post">
         <fieldset>
             <legend>Desk Order Information</legend>
