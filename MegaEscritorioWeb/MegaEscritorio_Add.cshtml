@@ -74,11 +74,11 @@
 <html>
 <head>
     <title>Insert</title>    <!-- Latest compiled and minified CSS -->
-    @RenderPage("header.cshtml");
+    @RenderPage("_header.cshtml");
 </head>
 <body>
 <form method="post">
-    @Html.Label("Name of Order:")
+    @Html.Label("Customer Name:")
     @Html.TextBox("name", Request.Form["name"])
     @Html.ValidationMessage("name")
     <br /><br/>
