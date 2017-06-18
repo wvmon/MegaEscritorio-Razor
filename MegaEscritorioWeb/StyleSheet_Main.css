@@ -26,6 +26,10 @@ body {
     color: #06404e;
 }
 
+.search {
+    text-align: center
+}
+
 .grid {
     margin: 4px;
     border-collapse: collapse;

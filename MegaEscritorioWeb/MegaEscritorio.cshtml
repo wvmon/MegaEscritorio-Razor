@@ -20,8 +20,8 @@
 </head>
 <body>
 <form method="get">
-    <div>
-        <label for="search">Search by item name or material in verse:</label>
+    <div class="search">
+        <label for="search">Search by item name or material:</label>
         <input type="text" name="search" value="@Request.QueryString["search"]" />
         <input class="btnSearch" type="Submit" value="Search" /><br />
         (Leave blank to list all items)<br />
@@ -33,7 +33,7 @@
         headerStyle: "head",
         alternatingRowStyle: "alt",
         columns: grid.Columns(
-            grid.Column(format: @<a href="~/MegaEscritorio_Edit.cshtml?id=@item.ID">Edit</a>),
+            grid.Column(format: @<a class="btn btn-info" href="~/MegaEscritorio_Edit.cshtml?id=@item.ID">Edit</a>),
             grid.Column("Name", header: "Customer Name"),
             grid.Column("Length"),
             grid.Column("Width"),
@@ -42,7 +42,7 @@
             grid.Column("Days", header: "Rush Days"),
             grid.Column("Date", header: "Order Date"),
             grid.Column("Total", header: "Total Cost"),
-            grid.Column(format: @<a href="~/MegaEscritorio_Delete.cshtml?id=@item.ID">Delete</a>)
+            grid.Column(format: @<a class="btn btn-danger" href="~/MegaEscritorio_Delete.cshtml?id=@item.ID">Delete</a>)
             )
         )
     <p><a class="btn btn-primary" href="MegaEscritorio_Add.cshtml">Add Desk</a></p>
