@@ -109,10 +109,10 @@
 <html>
 <head>
     <title>Edit</title>    <!-- Latest compiled and minified CSS -->
-    @RenderPage("_header.cshtml");
+    @RenderPage("_header.cshtml")
 </head>
 <body>
-<h2>Edit an Escritorio</h2>
+<h1>Edit an Escritorio</h1>
 @Html.ValidationSummary()
 <form method="post">
     <fieldset>
@@ -173,7 +173,7 @@
 
         <p><input class="btn btn-primary" type="submit" name="buttonSubmit" value="Submit Changes" /></p>
     </fieldset>
+    <p><a class="btn btn-primary" href="~/MegaEscritorio">Return to Mega Escritorio Orders</a></p>
 </form>
-<p><a class="btn btn-primary" href="~/MegaEscritorio">Return to Mega Escritorio Orders</a></p>
 </body>
 </html>

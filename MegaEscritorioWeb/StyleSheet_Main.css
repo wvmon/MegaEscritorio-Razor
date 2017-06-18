@@ -8,11 +8,20 @@
     color: #06404e;
 }
 
+.main_title {
+    font-family: Garamond Serif serif;
+    font-weight: bold;
+    padding-top: 25px;
+    text-align: center;
+    letter-spacing: 5px;
+    color: #06404e;
+}
+
 body {
     margin: 0;
     padding: 1em;
     background-color: #ffffff;
-    font: 75%/1.75em;
+    font-size: 1.75em;
     font-family: 'Trebuchet MS', sans-serif;
     color: #06404e;
 }
@@ -21,15 +30,6 @@ body {
     margin: 4px;
     border-collapse: collapse;
     width: 600px;
-}
-
-.main_title {
-    font-family: Garamond Serif serif;
-    font-weight: bold;
-    padding-top: 25px;
-    text-align: center;
-    letter-spacing: 5px;
-    color: #06404e;
 }
 
 form {
@@ -47,7 +47,7 @@ form {
     padding-bottom: 15px;
 }
 
-.btn {
+.btnSearch {
     width: 12%;
     background: transparent;
     border: 3px solid #B9B1A8;
@@ -57,9 +57,10 @@ form {
     transition: all 0.5s;
 }
 
-.btn:hover {
+.btnSearch:hover {
     border-color: #3D3C3A;
     color: #3D3C3A;
+
 }
 
 .grid th, .grid td {

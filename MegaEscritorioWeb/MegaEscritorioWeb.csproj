@@ -94,13 +94,14 @@
     <Content Include="MegaEscritorio_Add.cshtml" />
     <Content Include="MegaEscritorio_Delete.cshtml" />
     <Content Include="MegaEscritorio_Edit.cshtml" />
-    <Content Include="header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="StyleSheet_Main.css" />
+    <Content Include="_header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
